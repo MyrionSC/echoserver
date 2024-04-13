@@ -94,7 +94,7 @@ app.use((err, req, res, next) => {
 })
 
 //start app
-const port = 8078
+const port = 8077
 app.listen(port, () =>
     console.log(`App is listening on port ${port}`)
 )

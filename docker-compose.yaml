@@ -1,0 +1,10 @@
+version: '3'
+services:
+  echoserver:
+    container_name: echoserver
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8077:8077"
+    restart: always
