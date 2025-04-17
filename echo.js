@@ -12,7 +12,12 @@ const app = express()
 // to call from localhost, need to set cors for exact port like below. * is not enough.
 app.use(cors({origin: ["*", "http://localhost:3000"]}))
 app.use(morgan('dev'))
+app.use(express.urlencoded({extended: true}))
 app.use(express.json())
+const multer = require('multer')
+const upload = multer()
+
+app.use(upload.any())
 
 app.all('*', async function (req, res) {
     console.log(`\n=== ${req.method} ${req.url} ===`)
@@ -27,6 +32,19 @@ app.all('*', async function (req, res) {
         "params": req.params[0],
         "parametrizedParams": "/" + parametrizedParamList.join("/"),
         "body": req.body
+    }
+    if (req.files){
+        resObj.files = req.files.map(file => {
+            if (file.buffer && file.buffer.length > 1000) {
+                console.log(`file ${file.originalname} is larger than 1000 bytes, not logging buffer`)
+                const fileWithoutBuffer = {...file};
+                fileWithoutBuffer.buffer = null;
+                return fileWithoutBuffer;
+            }
+            return file;
+        });
+
+
     }
     console.dir(resObj, {depth: null})
 
