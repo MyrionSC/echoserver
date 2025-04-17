@@ -6,9 +6,6 @@ const {getParametrizedParamList} = require("./helper")
 
 const app = express()
 
-// TODO: dockerize
-// TODO: colored logs
-
 // to call from localhost, need to set cors for exact port like below. * is not enough.
 app.use(cors({origin: ["*", "http://localhost:3000"]}))
 app.use(morgan('dev'))
@@ -43,9 +40,8 @@ app.all('*', async function (req, res) {
             }
             return file;
         });
-
-
     }
+
     console.dir(resObj, {depth: null})
 
     if (req.url.includes(".well-known/openid-configuration")) {
