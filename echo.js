@@ -20,7 +20,7 @@ const upload = multer()
 app.use(upload.any())
 
 app.all('*', async function (req, res) {
-    console.log(`\n=== ${req.method} ${req.url} ===`)
+    console.log(`\n${(new Date().toISOString())} === ${req.method} ${req.url}`)
 
     const parametrizedParamList = getParametrizedParamList(req)
     let resObj = {
